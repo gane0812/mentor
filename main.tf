@@ -36,7 +36,4 @@ resource "azurerm_resource_group" "rg" {
 location = "east US"
 }
 
-resource "azurerm_resource_group" "rg2" {
-  name = "mentor-rg-2"
-location = "east US"
-}
+
