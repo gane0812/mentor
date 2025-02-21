@@ -31,7 +31,7 @@ resource "azurerm_storage_account" "storage_account" {
   account_replication_type = "LRS"
 }
 
-resource "azurerm_resource_group" "rg1" {
+resource "azurerm_resource_group" "rg" {
   name = "mentor-rg"
 location = "east US"
 }
