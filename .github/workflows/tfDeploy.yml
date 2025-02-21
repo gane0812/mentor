@@ -3,7 +3,7 @@ name: Terraform Deployment to Azure
 on:
   push:
     branches:
-      - main  # Change as needed
+      - master  # Change as needed
 
 permissions:
   id-token: write  # Enables OIDC authentication
