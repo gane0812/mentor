@@ -30,3 +30,8 @@ resource "azurerm_storage_account" "storage_account" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
+
+resource "azurerm_resource_group" "rg" {
+  name = "mentor-rg"
+location = "east US"
+}
