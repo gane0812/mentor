@@ -1,0 +1,50 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch  # Allows manual execution
+
+permissions:
+  id-token: write  # Enables OIDC authentication
+  contents: read
+
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Log in to Azure using Federated Credentials
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.4.0  
+
+      - name: Create backend.tf (Temporary Backend Configuration)
+        run: |
+          cat <<EOF > backend.tf
+          terraform {
+            backend "azurerm" {}
+          }
+          EOF
+
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -backend-config="storage_account_name=${{ secrets.AZURE_STORAGE_ACCOUNT }}" \
+            -backend-config="container_name=${{ secrets.AZURE_STORAGE_CONTAINER }}" \
+            -backend-config="key=terraform.tfstate" \
+            -backend-config="access_key=${{ secrets.AZURE_STORAGE_ACCESS_KEY }}"
+
+      - name: Terraform Destroy Plan
+        run: terraform plan -destroy -out=tfplan
+
+      - name: Terraform Destroy (Confirm & Apply)
+        run: terraform apply -auto-approve tfplan
