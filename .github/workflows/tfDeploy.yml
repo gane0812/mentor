@@ -46,7 +46,7 @@ jobs:
             -backend-config="access_key=${{ secrets.AZURE_STORAGE_ACCESS_KEY }}"
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan -out=tfplan -var="vm_ssh_public_key=${{ secrets.LINUX_ VM_PUBLIC_KEY }}"
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve tfplan 

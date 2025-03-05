@@ -155,7 +155,8 @@ resource "azurerm_linux_virtual_machine" "staging_vm" {
 
   admin_ssh_key {
     username   = "kaliadmin"
-    public_key = file("~/.ssh/id_rsa.pub")
+    #public_key = file("~/.ssh/id_rsa.pub")
+    public_key = var.vm_ssh_public_key
   }
 
   os_disk {
