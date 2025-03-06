@@ -4,7 +4,10 @@ on:
   push:
     branches:
       - master  # Change as needed
-
+concurrency:
+  group: terraform-deploy
+  cancel-in-progress: true  # Cancels previous runs before starting a new one
+  
 permissions:
   id-token: write  # Enables OIDC authentication
   contents: read
