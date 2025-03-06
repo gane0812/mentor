@@ -152,7 +152,7 @@ resource "azurerm_linux_virtual_machine" "staging_vm" {
   network_interface_ids = [
     azurerm_network_interface.staging_nic[count.index].id,
   ]
-
+#no 
   admin_ssh_key {
     username   = "kaliadmin"
     #public_key = file("~/.ssh/id_rsa.pub")
