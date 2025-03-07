@@ -43,8 +43,5 @@ jobs:
             -backend-config="key=prod.terraform.tfstate" \
             -backend-config="access_key=${{ secrets.AZURE_STORAGE_ACCESS_KEY }}"
 
-      - name: Terraform Destroy Plan
-        run: terraform plan -destroy -out=tfplan
-
       - name: Terraform Destroy (Confirm & Apply)
-        run: terraform apply -auto-approve tfplan
+        run: terraform destroy -auto-approve
